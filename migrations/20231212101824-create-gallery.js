@@ -13,7 +13,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.TEXT("long"),
       },
-      cafeId: {
+      CafeId: {
         type: Sequelize.INTEGER,
         references: {
           model: "Caves",

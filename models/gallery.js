@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
-      cafeId: DataTypes.NUMBER,
+      CafeId: DataTypes.NUMBER,
     },
     {
       sequelize,
