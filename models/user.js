@@ -50,7 +50,11 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       bio: DataTypes.TEXT,
-      avatar: DataTypes.TEXT,
+      avatar: {
+        type: DataTypes.TEXT,
+        defaultValue:
+          "https://i.pinimg.com/originals/b8/9f/27/b89f270e2aee0577efc5e604f08132d1.jpg",
+      },
       role: {
         type: DataTypes.STRING,
         allowNull: false,

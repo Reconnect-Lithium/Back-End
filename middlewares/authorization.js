@@ -11,4 +11,4 @@ async function onlyOwner(req, res, next) {
   }
 }
 
-module.exports = { onlyOwner };
+module.exports = onlyOwner;
