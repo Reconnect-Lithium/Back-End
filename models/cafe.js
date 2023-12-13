@@ -17,7 +17,11 @@ module.exports = (sequelize, DataTypes) => {
   Cafe.init(
     {
       description: DataTypes.STRING,
-      photo: DataTypes.TEXT,
+      photo: {
+        type: DataTypes.TEXT,
+        defaultValue:
+          "https://th.bing.com/th/id/OIP.dwbVjCtNKJYR_aGWmCoTGAHaHa?rs=1&pid=ImgDetMain",
+      },
       location: {
         type: DataTypes.GEOMETRY,
         allowNull: false,
