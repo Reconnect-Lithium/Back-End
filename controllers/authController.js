@@ -1,15 +1,16 @@
-const { User } = require("../models");
+const { User, Cafe } = require("../models");
 const { createToken } = require("../helpers/jwt");
 const { comparePassword } = require("../helpers/bycrypt");
 
 class authController {
   static async registerUser(req, res, next) {
     try {
-      let { email, password } = req.body;
+      let { email, password, username } = req.body;
       let data = await User.create({
+        username,
         email,
         password,
-        role:"user",
+        role: "user",
       });
       res.status(201).json({ id: data.id, email: data.email });
     } catch (error) {
@@ -18,15 +19,22 @@ class authController {
   }
   static async registerOwner(req, res, next) {
     try {
-      let { email, password } = req.body;
+      let { email, password, username, longitude, latitude, name, address } =
+        req.body;
       let data = await User.create({
+        username,
         email,
         password,
-        role:"owner",
+        role: "owner",
       });
-      // ////////////////////////////////////////////////////
       // ADD NEW CAFE
-      // ///////////////////////////////////////////////////
+      let point = { type: "Point", coordinates: [longitude, latitude] };
+      let cafe = await Cafe.create({
+        name,
+        address,
+        location: point,
+        UserId: data.id,
+      });
       res.status(201).json({ id: data.id, email: data.email });
     } catch (error) {
       next(error);
