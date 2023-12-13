@@ -8,6 +8,8 @@ function errorHandler(err, req, res, next) {
     res.status(400).json({ message: `${err.field} is required!` });
   } else if (err.name === "noFile") {
     res.status(400).json({ message: `Image file is required!` });
+  } else if (err.name === "noUserLocation") {
+    res.status(400).json({ message: `Need user location (longitude, latitude) to query cafe` });
   } else if (err.name === "notFound") {
     res.status(404).json({ message: `Data with id ${err.id} is not found` });
   } else if (err.name === "forbidden") {
