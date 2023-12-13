@@ -25,7 +25,7 @@ class cafeController {
         public_id: fileName,
         folder: "reconnect",
       });
-      await Cafe.update({ imgUrl: uploaded.url }, { where: { id } });
+      await Cafe.update({ photo: uploaded.url }, { where: { id } });
       res.status(200).json({ message: "Image Article success to update" });
     } catch (error) {
       console.log(error);
