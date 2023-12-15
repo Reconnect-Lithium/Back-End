@@ -40,16 +40,17 @@ _Response (400 - Bad Request)_
 Request:
 
 - body:
-name is for cafe name
+  name is for cafe name
+
 ```json
 {
-    "email":"ardi@mail.com",
-    "password":"ardiardi",
-    "username":"ardiardi",
-    "longitude":106.805534,
-    "latitude": -6.272444, 
-    "name": "cafe hacktiv", 
-    "address":"hacktiv 8"
+  "email": "ardi@mail.com",
+  "password": "ardiardi",
+  "username": "ardiardi",
+  "longitude": 106.805534,
+  "latitude": -6.272444,
+  "name": "cafe hacktiv",
+  "address": "hacktiv 8"
 }
 ```
 

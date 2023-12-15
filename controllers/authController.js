@@ -21,6 +21,7 @@ class authController {
     try {
       let { email, password, username, longitude, latitude, name, address } =
         req.body;
+
       let data = await User.create({
         username,
         email,
@@ -55,6 +56,7 @@ class authController {
       if (!user) {
         throw { name: "unauthorized" };
       }
+
       // compare password
       if (!comparePassword(password, user.password)) {
         throw { name: "unauthorized" };
