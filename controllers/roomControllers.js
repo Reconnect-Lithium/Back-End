@@ -62,5 +62,18 @@ class roomControllers {
       next(error);
     }
   }
+
+  // list event
+  static async listEvent(req, res, next) {
+    try {
+      const listEvent = await Occasion.findAll();
+      // console.log(listEvent);
+
+      res.send(listEvent);
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  }
 }
 module.exports = roomControllers;
