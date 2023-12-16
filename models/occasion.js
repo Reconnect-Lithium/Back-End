@@ -41,7 +41,11 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       description: DataTypes.TEXT,
-      photo: DataTypes.TEXT,
+      photo: {
+        type: DataTypes.TEXT,
+        defaultValue:
+          "https://img.freepik.com/free-photo/friends-clinking-drink-glasses-modern-bar_1150-18971.jpg?size=626&ext=jpg&ga=GA1.2.1647626962.1701751850&semt=ais",
+      },
       eventName: {
         type: DataTypes.STRING,
         allowNull: false,

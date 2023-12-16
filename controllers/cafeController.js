@@ -98,7 +98,6 @@ class cafeController {
   }
   static async changeDescription(req, res, next) {
     try {
-      console.log(req.body);
       let { description } = req.body;
       let { id } = req.params;
       let cafe = await Cafe.findByPk(id);
