@@ -75,5 +75,24 @@ class roomControllers {
       next(error);
     }
   }
+
+  // listMessage
+  static async listMessage(req, res, next) {
+    try {
+      const { id } = req.params;
+
+      const roomMsg = await Message.findAll({
+        wehre: {
+          roomId: id,
+        },
+        order: [["createdAt", "DESC"]],
+      });
+
+      res.send(roomMsg);
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  }
 }
 module.exports = roomControllers;
