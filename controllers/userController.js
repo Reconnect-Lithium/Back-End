@@ -25,7 +25,6 @@ class userController {
   }
   static async changeBio(req, res, next) {
     try {
-      console.log(req.body);
       let { bio } = req.body;
       let { id } = req.params;
       let user = await User.findByPk(id);
