@@ -9,6 +9,7 @@ const {
 } = require("../models");
 
 class roomControllers {
+  // create event
   static async createEvent(req, res, next) {
     try {
       const userId = req.user.id;
@@ -40,8 +41,20 @@ class roomControllers {
     }
   }
 
-  //   joinRoom
+  // join room?
   static async joinRoom(req, res, next) {
+    try {
+      const { id } = req.params;
+
+      const occasion = await Occasion.findByPk(id);
+      res.send(occasion);
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  }
+  //   create msg
+  static async createMsg(req, res, next) {
     try {
       const userId = req.user.id;
       const { roomId } = req.params;
@@ -79,11 +92,11 @@ class roomControllers {
   // listMessage
   static async listMessage(req, res, next) {
     try {
-      const { id } = req.params;
+      const { OccasionId } = req.params;
 
       const roomMsg = await Message.findAll({
         wehre: {
-          roomId: id,
+          OccasionId: OccasionId,
         },
         order: [["createdAt", "DESC"]],
       });
