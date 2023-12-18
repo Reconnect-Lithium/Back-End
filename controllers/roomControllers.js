@@ -11,43 +11,48 @@ const {
 
 class roomControllers {
   // create event
-  static async createEvent(req, res, next) {
-    try {
-      const userId = req.user.id;
-      const { startTime, endTime, description, photo, eventName, CategoryId } =
-        req.body;
-      const cafeId = await Cafe.findOne({ UserId: userId });
+  // static async createEvent(req, res, next) {
+  //   try {
+  //     const userId = req.user.id;
+  //     const { startTime, endTime, description, photo, eventName, CategoryId } =
+  //       req.body;
+  //     const cafeId = await Cafe.findOne({ UserId: userId });
 
-      // create event
-      const eventId = await Occasion.create({
-        startTime,
-        endTime,
-        description,
-        photo,
-        eventName,
-        CategoryId,
-        CafeId: cafeId.id,
-      });
+  //     // create event
+  //     const eventId = await Occasion.create({
+  //       startTime,
+  //       endTime,
+  //       description,
+  //       photo,
+  //       eventName,
+  //       CategoryId,
+  //       CafeId: cafeId.id,
+  //     });
 
-      // create roooms
-      await Room.create({
-        OccasionId: eventId.id,
-        UserId: userId,
-      });
+  //     // create roooms
+  //     await Room.create({
+  //       OccasionId: eventId.id,
+  //       UserId: userId,
+  //     });
 
-      res.send({ message: `success add ${eventName} as new event` });
-    } catch (error) {
-      console.log(error);
-      next(error);
-    }
-  }
+  //     res.send({ message: `success add ${eventName} as new event` });
+  //   } catch (error) {
+  //     console.log(error);
+  //     next(error);
+  //   }
+  // }
 
   // join room?
   static async joinRoom(req, res, next) {
     try {
       const { id } = req.params;
-
+      const userId = req.user.id;
       const room = await Room.findOne({ where: { OccasionId: id } });
+      const newUserRoom = await Room.create({
+        OccasionId: id,
+        UserId: userId,
+        RoomId: room.RoomId,
+      });
       res.send(room);
     } catch (error) {
       console.log(error);
@@ -89,17 +94,17 @@ class roomControllers {
   }
 
   // list event
-  static async listEvent(req, res, next) {
-    try {
-      const listEvent = await Occasion.findAll();
-      // console.log(listEvent);
+  // static async listEvent(req, res, next) {
+  //   try {
+  //     const listEvent = await Occasion.findAll();
+  //     // console.log(listEvent);
 
-      res.send(listEvent);
-    } catch (error) {
-      console.log(error);
-      next(error);
-    }
-  }
+  //     res.send(listEvent);
+  //   } catch (error) {
+  //     console.log(error);
+  //     next(error);
+  //   }
+  // }
 
   // listMessage
   static async listMessage(req, res, next) {

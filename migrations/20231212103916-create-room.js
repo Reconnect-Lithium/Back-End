@@ -27,6 +27,9 @@ module.exports = {
         onUpdate: "cascade",
         onDelete: "cascade",
       },
+      RoomId: {
+        type: Sequelize.STRING,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

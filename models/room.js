@@ -1,5 +1,7 @@
-"use strict";
-const { Model } = require("sequelize");
+'use strict';
+const {
+  Model
+} = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Room extends Model {
     /**
@@ -14,15 +16,13 @@ module.exports = (sequelize, DataTypes) => {
       Room.hasMany(models.Message);
     }
   }
-  Room.init(
-    {
-      OccasionId: DataTypes.NUMBER,
-      UserId: DataTypes.NUMBER,
-    },
-    {
-      sequelize,
-      modelName: "Room",
-    }
-  );
+  Room.init({
+    OccasionId: DataTypes.NUMBER,
+    UserId: DataTypes.NUMBER,
+    RoomId: DataTypes.STRING
+  }, {
+    sequelize,
+    modelName: 'Room',
+  });
   return Room;
 };

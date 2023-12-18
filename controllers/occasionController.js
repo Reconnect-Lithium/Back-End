@@ -1,4 +1,4 @@
-const { Category, Occasion, Cafe, sequelize } = require("../models");
+const { Category, Occasion, Cafe, Room, sequelize } = require("../models");
 const { convertToURI, getFileName } = require("../helpers/uploadUtils");
 const cloudinary = require("cloudinary").v2;
 
@@ -31,7 +31,7 @@ class occasionController {
         public_id: fileName,
         folder: "reconnect",
       });
-      await Occasion.create({
+      const eventId = await Occasion.create({
         startTime: new Date(startTime),
         endTime: new Date(endTime),
         description,
@@ -39,6 +39,12 @@ class occasionController {
         eventName,
         CategoryId,
         CafeId: cafeId.id,
+      });
+
+      await Room.create({
+        OccasionId: eventId.id,
+        UserId: userId,
+        RoomId:`${userId}_${Date.now()}`
       });
 
       res.send({ message: `success add ${eventName} as new event` });
