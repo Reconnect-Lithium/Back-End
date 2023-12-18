@@ -10,7 +10,7 @@ const socketIo = require("socket.io");
 const server = http.createServer(app);
 const io = socketIo(server, {
   cors: {
-    origin: "exp://v2xarfw.neir_0.8081.exp.direct", // react native expo
+    origin: "exp://mujtlnu.neir_0.8081.exp.direct", // react native expo
   },
 });
 

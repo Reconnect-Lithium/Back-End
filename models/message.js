@@ -39,7 +39,7 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
-      RoomId: DataTypes.NUMBER,
+      RoomId: DataTypes.STRING,
       UserId: DataTypes.NUMBER,
     },
     {
