@@ -1,3 +1,4 @@
+const { where } = require("sequelize");
 const {
   User,
   Gallery,
@@ -46,13 +47,14 @@ class roomControllers {
     try {
       const { id } = req.params;
 
-      const occasion = await Occasion.findByPk(id);
-      res.send(occasion);
+      const room = await Room.findOne({ where: { OccasionId: id } });
+      res.send(room);
     } catch (error) {
       console.log(error);
       next(error);
     }
   }
+
   //   create msg
   static async createMsg(req, res, next) {
     try {
@@ -67,9 +69,19 @@ class roomControllers {
         message: message,
         time: Date.now(),
       });
-      //   console.log(message);
+      // console.log(newMessage.id);
 
-      res.send(newMessage);
+      const data = await Message.findOne({
+        where: {
+          id: newMessage.id,
+        },
+        include: {
+          model: User,
+          attributes: { exclude: ["password"] },
+        },
+      });
+
+      res.send(data);
     } catch (error) {
       console.log(error);
       next(error);
@@ -92,13 +104,17 @@ class roomControllers {
   // listMessage
   static async listMessage(req, res, next) {
     try {
-      const { OccasionId } = req.params;
-
+      const { roomId } = req.params;
+      // console.log(roomId, ">>>>>>>");
       const roomMsg = await Message.findAll({
-        wehre: {
-          OccasionId: OccasionId,
+        where: {
+          RoomId: roomId,
         },
         order: [["createdAt", "DESC"]],
+        include: {
+          model: User,
+          attributes: { exclude: ["password"] },
+        },
       });
 
       res.send(roomMsg);
