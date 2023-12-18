@@ -18,13 +18,7 @@ module.exports = {
         type: Sequelize.TEXT("long"),
       },
       RoomId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: "Rooms",
-          key: "id",
-        },
-        onUpdate: "cascade",
-        onDelete: "cascade",
+        type: Sequelize.STRING,
       },
       UserId: {
         type: Sequelize.INTEGER,

@@ -55,8 +55,9 @@ beforeAll(async () => {
 
   // create room
   let room = {
-    EventId: 1,
+    OccasionId: 123,
     UserId: 1,
+    RoomId:1
   };
   await Room.create(room);
 });
