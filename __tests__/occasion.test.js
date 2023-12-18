@@ -75,19 +75,76 @@ afterAll(async () => {
   await Room.destroy({ truncate: true, restartIdentity: true, cascade: true });
 });
 
-describe("POST /occasion", () => {
+describe.only("POST /occasion", () => {
   test("Create event success", async () => {
-    let data = {
-      startTime,
-      endTime,
-      description:"test1",
-      eventName:"test1",
-      CategoryId:1,
-    };
-    const response = await request(app).post("/register/owner").send(data);
+    let filename = new Date() + "foto-toko.jpg";
+    const response = await request(app)
+      .post("/occasion")
+      .set("Authorization", ownerToken)
+      .attach("photo", imageBuffer, filename)
+      .field("startTime", "2023-12-16T04:43:33.437Z")
+      .field("endTime", "2023-12-16T05:43:33.437Z")
+      .field("description", "test1")
+      .field("eventName", "test1")
+      .field("CategoryId", 1);
 
-    expect(response.status).toBe(201);
-    expect(response.body).toHaveProperty("id", expect.any(Number));
-    expect(response.body).toHaveProperty("email", expect.any(String));
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveProperty("message", expect.any(String));
+  });
+  test("Create event fail when CategoryId not provided", async () => {
+    let filename = new Date() + "foto-toko.jpg";
+    const response = await request(app)
+      .post("/occasion")
+      .set("Authorization", ownerToken)
+      .attach("photo", imageBuffer, filename)
+      .field("startTime", "2023-12-16T04:43:33.437Z")
+      .field("endTime", "2023-12-16T05:43:33.437Z")
+      .field("description", "test1")
+      .field("eventName", "test1");
+
+    expect(response.status).toBe(400);
+    expect(response.body).toHaveProperty("message", expect.any(String));
+  });
+  test("Create event fail when photo file not provided", async () => {
+    let filename = new Date() + "foto-toko.jpg";
+    const response = await request(app)
+      .post("/occasion")
+      .set("Authorization", ownerToken)
+      .field("startTime", "2023-12-16T04:43:33.437Z")
+      .field("endTime", "2023-12-16T05:43:33.437Z")
+      .field("description", "test1")
+      .field("eventName", "test1");
+
+    expect(response.status).toBe(400);
+    expect(response.body).toHaveProperty("message", expect.any(String));
+  });
+  test("Create event fail when owner not login", async () => {
+    let filename = new Date() + "foto-toko.jpg";
+    const response = await request(app)
+      .post("/occasion")
+      .attach("photo", imageBuffer, filename)
+      .field("startTime", "2023-12-16T04:43:33.437Z")
+      .field("endTime", "2023-12-16T05:43:33.437Z")
+      .field("description", "test1")
+      .field("eventName", "test1")
+      .field("CategoryId", 1);
+
+    expect(response.status).toBe(401);
+    expect(response.body).toHaveProperty("message", expect.any(String));
+  });
+  test("Create event fail when user try create event", async () => {
+    let filename = new Date() + "foto-toko.jpg";
+    const response = await request(app)
+      .post("/occasion")
+      .set("Authorization", userToken)
+      .attach("photo", imageBuffer, filename)
+      .field("startTime", "2023-12-16T04:43:33.437Z")
+      .field("endTime", "2023-12-16T05:43:33.437Z")
+      .field("description", "test1")
+      .field("eventName", "test1")
+      .field("CategoryId", 1);
+
+    expect(response.status).toBe(403);
+    expect(response.body).toHaveProperty("message", expect.any(String));
   });
 });

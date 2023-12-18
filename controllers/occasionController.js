@@ -88,7 +88,7 @@ class occasionController {
           :distance,
           TRUE) = TRUE
       )
-      SELECT oc.id AS "eventId", oc.*,cte.*,ca.name AS "categoryName"
+      SELECT oc.id AS "eventId",oc.photo AS "eventPhoto", oc.*,cte.*,ca.name AS "categoryName"
       FROM "Occasions" AS oc
       INNER JOIN cte ON oc."CafeId" = cte.id
       JOIN "Categories" AS ca ON oc."CategoryId" = ca.id
