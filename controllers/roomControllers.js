@@ -47,12 +47,22 @@ class roomControllers {
     try {
       const { id } = req.params;
       const userId = req.user.id;
-      const room = await Room.findOne({ where: { OccasionId: id } });
-      const newUserRoom = await Room.create({
-        OccasionId: id,
-        UserId: userId,
-        RoomId: room.RoomId,
+      const room = await Room.findOne({
+        where: { OccasionId: id },
       });
+      if (!room) {
+        throw { name: "notFound", id };
+      }
+      const roomUser = await Room.findOne({
+        where: { OccasionId: id, UserId: userId },
+      });
+      if (!roomUser) {
+        const newUserRoom = await Room.create({
+          OccasionId: id,
+          UserId: userId,
+          RoomId: room.RoomId,
+        });
+      }
       res.send(room);
     } catch (error) {
       console.log(error);
