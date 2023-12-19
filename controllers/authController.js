@@ -36,7 +36,9 @@ class authController {
         location: point,
         UserId: data.id,
       });
-      res.status(201).json({ id: data.id, email: data.email });
+      res
+        .status(201)
+        .json({ id: data.id, email: data.email, username: data.username });
     } catch (error) {
       next(error);
     }
