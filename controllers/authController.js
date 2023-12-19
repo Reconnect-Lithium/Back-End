@@ -63,7 +63,9 @@ class authController {
       }
       // create token
       const token = createToken({ id: user.id });
-      res.status(200).json({ access_token: token });
+      res
+        .status(200)
+        .json({ access_token: token, id: user.id, role: user.role });
     } catch (error) {
       next(error);
     }
