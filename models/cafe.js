@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Cafe.init(
     {
-      description: DataTypes.STRING,
+      description: DataTypes.TEXT,
       photo: {
         type: DataTypes.TEXT,
         defaultValue:
