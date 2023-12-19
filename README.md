@@ -525,6 +525,61 @@ _Response (200 - Created)_
   }
 }
 ```
+&nbsp;
+
+## 16. GET /room/occasion/:id
+
+- Header:
+
+```json
+{
+  "Authorization": "Bearer <JWT TOKEN>"
+}
+```
+
+_Response (200 - Created)_
+
+```json
+{
+  "id": 1,
+  "startTime": "2023-12-16T05:43:33.437Z",
+  "endTime": "2023-12-16T05:43:33.437Z",
+  "description": null,
+  "photo": String,
+  "eventName": "event buat 1",
+  "CategoryId": 1,
+  "CafeId": 1,
+  "createdAt": "2023-12-18T09:14:56.123Z",
+  "updatedAt": "2023-12-18T09:14:56.123Z",
+  "Cafe": {
+    "id": 1,
+    "description": null,
+    "photo": String,
+    "location": {
+      "crs": {
+        "type": "name",
+        "properties": {
+          "name": "EPSG:4326"
+        }
+      },
+      "type": "Point",
+      "coordinates": [106.805234, -6.272244]
+    },
+    "name": "cafe 1",
+    "address": "cafe 1",
+    "UserId": 2,
+    "createdAt": "2023-12-18T09:10:51.947Z",
+    "updatedAt": "2023-12-18T09:10:51.947Z"
+  },
+  "Category": {
+    "id": 1,
+    "name": "music",
+    "thumbnail": String,
+    "createdAt": "2023-12-18T08:58:21.814Z",
+    "updatedAt": "2023-12-18T08:58:21.814Z"
+  }
+}
+```
 
 &nbsp;
 
