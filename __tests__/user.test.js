@@ -1,7 +1,11 @@
 const request = require("supertest");
 const getToken = require("../helpers/getToken");
 const app = require("../app");
+const fs = require("fs");
 const { User, Cafe, Category, Occasion, Room } = require("../models");
+let filePath = `${__dirname}\\testFiles\\foto-toko.jpg`;
+const imageBuffer = fs.readFileSync(filePath); // Buffer
+
 let ownerToken;
 beforeAll(async () => {
   // create user
@@ -126,32 +130,39 @@ describe("PATCH user/bio/:id", () => {
   });
 });
 
-describe("PATCH user/avatar/:id", () => {
-  let data = {
-    avatar: "patch avatar",
-  };
-  test("Success patch user avatar by id ", async () => {
+describe("PATCH /user/avatar/:id", () => {
+  test("Success patch user avatar with id from params", async () => {
+    let filename = new Date() + "foto-toko.jpg";
     const response = await request(app)
       .patch("/user/avatar/1")
-      .send(data)
+      .attach("avatar", imageBuffer, filename)
       .set("Authorization", ownerToken);
     expect(response.status).toBe(200);
-    expect(response.body).toBeInstanceOf(Object);
     expect(response.body).toHaveProperty("message", expect.any(String));
   });
   test("Patch user avatar failed when user not login", async () => {
-    const response = await request(app).patch("/user/avatar/1").send(data);
+    let filename = new Date() + "foto-toko.jpg";
+    const response = await request(app)
+      .patch("/user/avatar/1")
+      .attach("avatar", imageBuffer, filename);
     expect(response.status).toBe(401);
-    expect(response.body).toBeInstanceOf(Object);
     expect(response.body).toHaveProperty("message", expect.any(String));
   });
-  test("Patch user avatar failed when user id not found", async () => {
+  test("Patch user avatar failed when id not found", async () => {
+    let route = `/user/avatar/999`;
     const response = await request(app)
-      .patch("/user/avatar/999")
-      .send(data)
+      .patch(route)
+      .attach("avatar", filePath)
       .set("Authorization", ownerToken);
     expect(response.status).toBe(404);
-    expect(response.body).toBeInstanceOf(Object);
+    expect(response.body).toHaveProperty("message", expect.any(String));
+  });
+  test("Patch user avatar failed when body is not valid", async () => {
+    const response = await request(app)
+      .patch("/user/avatar/1")
+      .attach("avatar", "", "")
+      .set("Authorization", ownerToken);
+    expect(response.status).toBe(400);
     expect(response.body).toHaveProperty("message", expect.any(String));
   });
 });

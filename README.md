@@ -713,9 +713,9 @@ _Response (200 - Updated)_
 }
 ```
 
-- body:
+- body (FORM DATA):
 
-```json
+```json 
 {
   "avatar": String
 }
